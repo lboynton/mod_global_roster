@@ -19,12 +19,12 @@ stop(Host) ->
   
 on_presence_joined(User, Server, _Resource, _Packet) ->
   {ok, Client} = client(Server),
-  {ok, <<"1">>} = eredis:q(Client, ["SADD", key_name(Server), User]),
+  eredis:q(Client, ["SADD", key_name(Server), User]),
   none.
 
 on_presence_left(User, Server, _Resource, _Status) ->
   {ok, Client} = client(Server),
-  {ok, <<"1">>} = eredis:q(Client, ["SREM", key_name(Server), User]),
+  eredis:q(Client, ["SREM", key_name(Server), User]),
   none.
 
 key_name(Server) ->
