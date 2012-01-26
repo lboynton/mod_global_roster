@@ -7,6 +7,8 @@
 
 start(Host, _Opts) ->
   ?INFO_MSG("mod_global_roster starting", []),
+  {ok, Client} = client(Host),
+  eredis:q(Client, ["FLUSHDB"]), % clear redis database when module starts
   ejabberd_hooks:add(set_presence_hook, Host, ?MODULE, on_presence_joined, 50),
   ejabberd_hooks:add(unset_presence_hook, Host, ?MODULE, on_presence_left, 50),
   ok.
