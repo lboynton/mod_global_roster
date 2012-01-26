@@ -13,8 +13,8 @@ start(Host, _Opts) ->
 
 stop(Host) ->
   ?INFO_MSG("mod_global_roster stopping", []),
-  ejabberd_hooks:remove(set_presence_hook, Host, ?MODULE, on_presence_joined, 50),
-  ejabberd_hooks:remove(unset_presence_hook, Host, ?MODULE, on_presence_left, 50),
+  ejabberd_hooks:delete(set_presence_hook, Host, ?MODULE, on_presence_joined, 50),
+  ejabberd_hooks:delete(unset_presence_hook, Host, ?MODULE, on_presence_left, 50),
   ok.
   
 on_presence_joined(User, Server, _Resource, _Packet) ->
