@@ -41,12 +41,12 @@ redis_db(Server) ->
   gen_mod:get_module_opt(Server, ?MODULE, redis_db, 0).
 
 client(Server) ->
-  case whereis(eredis_driver) of
+  case whereis(list_to_atom("eredis_driver_" ++ Server)) of
     undefined ->
       ?INFO_MSG("~s: Connecting to redis host: ~s port: ~b db: ~b", [Server, redis_host(Server), redis_port(Server), redis_db(Server)]),
       case eredis:start_link(redis_host(Server), redis_port(Server), redis_db(Server)) of
         {ok, Client} ->
-          register(eredis_driver, Client),
+          register(list_to_atom("eredis_driver_" ++ Server), Client),
           {ok, Client};
         {error, Reason} ->
           {error, Reason}
