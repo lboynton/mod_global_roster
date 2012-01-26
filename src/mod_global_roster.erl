@@ -43,6 +43,7 @@ redis_db(Server) ->
 client(Server) ->
   case whereis(eredis_driver) of
     undefined ->
+      ?INFO_MSG("~s: Connecting to redis host: ~s port: ~b db: ~b", [Server, redis_host(Server), redis_port(Server), redis_db(Server)]),
       case eredis:start_link(redis_host(Server), redis_port(Server), redis_db(Server)) of
         {ok, Client} ->
           register(eredis_driver, Client),
