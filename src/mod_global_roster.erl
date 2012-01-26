@@ -58,4 +58,3 @@ client(Server) ->
   end.
 %% TODO
 %% Handle redis errors
-%% Handle redis returning 0 (if item is in set or cannot be removed)
